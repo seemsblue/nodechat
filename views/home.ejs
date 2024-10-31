@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <!-- 부트스트랩 CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">안녕하세요</h1>
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-6">
+                <form class="form-box" action="/login" method="POST">
+                    <div class="form-group">
+                        <label for="email">ID</label>
+                        <input class="form-control" name="username" placeholder="아이디 입력하세요">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" class="form-control" name="password" placeholder="비밀번호 입력하세요">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">로그인</button>
+                </form>
+
+                <div class="text-center mt-3">
+                    <a href="/register" class="btn btn-secondary">회원가입</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

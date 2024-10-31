@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>회원가입</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2 class="text-center">회원가입 입니다.</h2>
+
+        <form id="registerForm" method="POST" action="/register">
+            <div class="form-group">
+                <label for="username">아이디</label>
+                <input type="text" class="form-control" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="password">비밀번호</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">회원가입</button>
+        </form>
+    </div>
+    <div id="message" style="color: red; margin-top: 20px;"></div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+
+        /*회원가입 아래 경고메시지 변경하는 함수*/
+        function setMessage(message){
+            document.getElementById('message').innerText = message;
+        }
+
+        document.getElementById('registerForm').addEventListener('submit', async function(event) {
+            event.preventDefault(); // 기본 폼 제출 방지
+            const id = document.querySelector('#username').value;
+            const password = document.querySelector('#password').value;
+            //console.log(`${id}/${password}`);
+
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+
+            if(id.length<4){
+                setMessage('id 4자 이상은 해주세요');
+                return;
+            }
+            else if(id.length>12){
+                setMessage('12자 까지만 사용해주세요 db 요금 없어요')
+            }
+            if(password.length<4){
+                setMessage('비번도 4자 이상은 해주세요');
+                return;
+            }
+            else if(password.length>18){
+                setMessage('보안은 좋지만 18자 까지만 사용해주세요 db 요금 없어요')
+            }
+
+            try {
+                const response = await fetch('/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) {
+                    const result = await response.json();
+                    setMessage(result.message);// 메시지 표시
+                } else {
+                    window.location.href = '/'; // 성공 시 리다이렉션
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                setMessage('회원가입 중 오류가 발생했습니다. 사유: 아이디 중복이거나 비정상 요청');
+            }
+        });
+    </script>
+</body>
+</html>
